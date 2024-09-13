@@ -127,10 +127,14 @@ main()
      next();
   });
 
-  app.get("/",(req,res,next)=>{
-    res.redirect("/listings");
+  app.get("/home",(req,res,next)=>{
+  //  res.redirect("/listings");
+    res.render("listings/home.ejs");
   })
-
+  app.get("/",(req,res,next)=>{
+    //  res.redirect("/listings");
+      res.render("listings/home.ejs");
+    })
 app.use("/listings",listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/",userRouter);
