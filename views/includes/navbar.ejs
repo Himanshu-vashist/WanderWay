@@ -1,0 +1,54 @@
+
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home" data-aos="fade-right" data-aos-duration="800">
+            <i class="fa-solid fa-compass"></i>
+            <span class="ms-2 fw-bold">WanderWay</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item" data-aos="fade-down" data-aos-delay="100">
+                    <a class="nav-link" href="/home"><i class="fa-solid fa-house-user me-1"></i> Home</a>
+                </li>
+                <li class="nav-item" data-aos="fade-down" data-aos-delay="200">
+                    <a class="nav-link" href="/listings"><i class="fa-solid fa-globe me-1"></i> Explore</a>
+                </li>
+                <li class="nav-item" data-aos="fade-down" data-aos-delay="300">
+                    <a class="nav-link" href="/listings/new"><i class="fa-solid fa-plus me-1"></i> Add Listing</a>
+                </li>
+            </ul>
+
+            <form class="d-flex me-3" role="search" data-aos="fade-left" data-aos-delay="400">
+                <div class="input-group">
+                    <input class="form-control search-inp" type="search" placeholder="Search destinations..." aria-label="Search">
+                    <button class="btn search-btn" type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i> Search
+                    </button>
+                </div>
+            </form>
+
+            <div class="navbar-nav" data-aos="fade-left" data-aos-delay="500">
+                <% if(!currUser) { %>
+                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link btn btn-primary text-white ms-2 px-3" href="/signup">Sign Up</a>
+                <% } else { %>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-user-circle me-1"></i> Account
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2"></i>My Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-list me-2"></i>My Listings</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-heart me-2"></i>Favorites</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout"><i class="fa-solid fa-sign-out-alt me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</nav>

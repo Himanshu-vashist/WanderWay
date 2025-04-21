@@ -1,0 +1,152 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="listings-header mb-4" data-aos="fade-up">
+    <h2 class="fw-bold">Explore Destinations</h2>
+    <p class="text-muted">Discover unique places to stay around the world</p>
+</div>
+
+<div id="container" class="filter-container" data-aos="fade-up">
+    <div id="filters" class="filters-scroll">
+        <a href="/listings/filter/trending" class="filter-link">
+            <div class="filter">
+                <div><i class="fa-solid fa-fire"></i></div>
+                <p>Trending</p>
+            </div>
+        </a>
+
+        <a href="/listings/filter/rooms" class="filter-link">
+            <div class="filter">
+                <div><i class="fa-solid fa-bed"></i></div>
+                <p>Rooms</p>
+            </div>
+        </a>
+
+        <a href="/listings/filter/iconic cities" class="filter-link">
+            <div class="filter">
+                <div><i class="fa-solid fa-mountain-city"></i></div>
+                <p>Iconic Cities</p>
+            </div>
+        </a>
+
+        <a href="/listings/filter/castle" class="filter-link">
+            <div class="filter">
+                <div><i class="fa-brands fa-fort-awesome"></i></div>
+                <p>Castle</p>
+            </div>
+        </a>
+
+        <a href="/listings/filter/mountain views" class="filter-link">
+            <div class="filter">
+                <div><i class="fa-solid fa-mountain-sun"></i></div>
+                <p>Mountain Views</p>
+            </div>
+        </a>
+
+        <a href="/listings/filter/camping" class="filter-link">
+            <div class="filter">
+                <div><i class="fa-solid fa-tent"></i></div>
+                <p>Camping</p>
+            </div>
+        </a>
+
+        <a href="/listings/filter/amazing nature" class="filter-link">
+            <div class="filter">
+                <div><i class="fa-solid fa-person-swimming"></i></div>
+                <p>Amazing Nature</p>
+            </div>
+        </a>
+
+        <a href="/listings/filter/farms" class="filter-link">
+            <div class="filter">
+                <div><i class="fa-solid fa-tractor"></i></div>
+                <p>Farms</p>
+            </div>
+        </a>
+
+        <a href="/listings/filter/arctic" class="filter-link">
+            <div class="filter">
+                <div><i class="fa-solid fa-snowflake"></i></div>
+                <p>Arctic</p>
+            </div>
+        </a>
+
+        <a href="/listings/filter/boats" class="filter-link">
+            <div class="filter">
+                <div><i class="fa-solid fa-ship"></i></div>
+                <p>Boats</p>
+            </div>
+        </a>
+
+        <a href="/listings/filter/domes" class="filter-link">
+            <div class="filter">
+                <div><i class="fa-solid fa-igloo"></i></div>
+                <p>Domes</p>
+            </div>
+        </a>
+    </div>
+
+    <div>
+        <div class="tax-switch">
+            <div class="form-check-reverse form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Display Total after Taxes</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4">
+    <% for(let listing of allListings){ %>
+    <div class="col" data-aos="fade-up" data-aos-delay="<%= allListings.indexOf(listing) * 50 %>">
+        <a href="/listings/<%= listing._id %>" class="listing-link">
+            <div class="card listing-card h-100">
+                <div class="card-img-wrapper">
+                    <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.title %>">
+                    <div class="card-img-overlay">
+                        <span class="location-badge"><i class="fa-solid fa-map-marker-alt me-1"></i><%= listing.location %></span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="category-badge"><%= listing.category || 'Travel' %></div>
+                    <h5 class="card-title"><%= listing.title %></h5>
+                    <p class="card-description"><%= listing.description ? (listing.description.substring(0, 60) + '...') : '' %></p>
+                    <div class="d-flex justify-content-between align-items-center mt-2">
+                        <p class="card-text mb-0">
+                            <strong>₹<%= listing.price.toLocaleString("en-IN") %></strong> / night
+                            <span class="tax-info d-none">+18% GST</span>
+                        </p>
+                        <div class="rating-mini">
+                            <i class="fa-solid fa-star"></i>
+                            <span>4.8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <% } %>
+</div>
+
+<script>
+    // Tax switch functionality
+    let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+    taxSwitch.addEventListener("click", () => {
+        let taxInfo = document.getElementsByClassName("tax-info");
+        for (let info of taxInfo) {
+            info.classList.toggle("d-none");
+        }
+    });
+
+    // Filter click tracking
+    const filterElements = document.querySelectorAll('.filter');
+    filterElements.forEach(filter => filter.addEventListener('click', () => {
+        console.log(`Clicked on ${filter.querySelector('p').textContent}`);
+    }));
+
+    // Initialize AOS animations for cards
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof AOS !== 'undefined') {
+            AOS.refresh();
+        }
+    });
+</script>

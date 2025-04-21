@@ -1,0 +1,25 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0 mb-5">
+                <div class="card-body p-5 text-center">
+                    <div class="mb-4">
+                        <i class="fa-solid fa-circle-exclamation text-danger" style="font-size: 4rem;"></i>
+                    </div>
+                    <h2 class="mb-3">Oops! Something went wrong</h2>
+                    <% if (typeof statusCode !== 'undefined') { %>
+                        <h5 class="text-muted mb-4">Error <%= statusCode %></h5>
+                    <% } %>
+                    <div class="alert alert-danger" role="alert">
+                        <p class="mb-0"><%= message %></p>
+                    </div>
+                    <div class="mt-4">
+                        <a href="/listings" class="btn btn-primary">Go to Listings</a>
+                        <a href="/" class="btn btn-outline-secondary ms-2">Go Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

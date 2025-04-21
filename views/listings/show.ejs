@@ -1,0 +1,188 @@
+<%- layout("/layouts/boilerplate") %>
+
+<!-- Page specific scripts -->
+
+<div class="row">
+    <div class="col-8 offset-3 mt-3">
+        <h3 class="mb-3"><%= listing.title %></h3>
+    </div>
+    <div class="card col-6 offset-3 show-card listing-card">
+        <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="<%= listing.title %>">
+        <div class="card-body">
+            <div class="owner-info">
+                <div class="owner-avatar"><%= listing.owner.username.charAt(0).toUpperCase() %></div>
+                <div class="owner-name">Hosted by <%= listing.owner.username %></div>
+            </div>
+
+            <p class="card-text"><%= listing.description %></p>
+
+            <div class="listing-details">
+                <div class="listing-detail">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                    &#8377;<%= listing.price.toLocaleString("en-IN") %> / night
+                </div>
+                <div class="listing-detail">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <%= listing.location %>, <%= listing.country %>
+                </div>
+            </div>
+
+            <% if (listing.category) { %>
+                <div class="listing-category">
+                    <%= listing.category.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ') %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<% if (currUser && currUser._id.equals(listing.owner._id)) { %>
+<div class="row mb-4">
+    <div class="col-8 offset-3 d-flex">
+        <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary me-2">Edit Listing</a>
+        <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+            <button class="btn btn-danger">Delete Listing</button>
+        </form>
+    </div>
+</div>
+<% } %>
+
+<div class="col-8 offset-3 mb-3 reviews-section">
+    <% if (currUser) { %>
+    <h4>Leave a Review</h4>
+    <form action="/listings/<%= listing.id %>/reviews" method="post" novalidate class="needs-validation review-form">
+        <div class="mb-3">
+            <label for="rating" class="form-label">Rating</label>
+            <fieldset class="starability-slot">
+                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                <label for="first-rate1" title="Terrible">1 star</label>
+                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                <label for="first-rate2" title="Not good">2 stars</label>
+                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                <label for="first-rate3" title="Average">3 stars</label>
+                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                <label for="first-rate4" title="Very good">4 stars</label>
+                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                <label for="first-rate5" title="Amazing">5 stars</label>
+            </fieldset>
+        </div>
+        <div class="mb-3">
+            <label for="comment" class="form-label">Your Review</label>
+            <textarea name="review[comment]" id="comment" cols="30" rows="4" class="form-control" placeholder="Share your experience with this place..." required></textarea>
+            <div class="invalid-feedback">Please add some comments for your review</div>
+        </div>
+        <button class="btn btn-primary">Submit Review</button>
+    </form>
+    <% } %>
+
+    <% if (listing.reviews.length > 0) { %>
+    <h4 class="reviews-title"><%= listing.reviews.length %> Review<%= listing.reviews.length > 1 ? 's' : '' %></h4>
+    <div class="row">
+        <% for (review of listing.reviews) { %>
+            <div class="col-12 mb-4">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar"><%= review.author.username.charAt(0).toUpperCase() %></div>
+                        <h5 class="review-author"><%= review.author.username %></h5>
+                        <span class="review-date">Posted <%= new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></span>
+                    </div>
+                    <div class="review-rating">
+                        <p class="starability-result" data-rating="<%= review.rating %>"></p>
+                    </div>
+                    <p class="review-text"><%= review.comment %></p>
+                    <% if (currUser && currUser._id.equals(review.author._id)) { %>
+                    <div class="review-actions">
+                        <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                            <button class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash me-1"></i> Delete</button>
+                        </form>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
+    </div>
+    <% } else { %>
+    <div class="text-center my-5">
+        <p class="text-muted">No reviews yet. Be the first to leave a review!</p>
+    </div>
+    <% } %>
+</div>
+
+<div class="col-8 offset-3 mb-3 map-container">
+    <h3>Where you'll be</h3>
+    <div id="map" class="map"></div>
+</div>
+
+<!-- Leaflet Maps CSS and JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+
+<script>
+    // Initialize map directly in the show.ejs file
+    document.addEventListener('DOMContentLoaded', function() {
+        const mapElement = document.getElementById('map');
+        if (!mapElement) return;
+
+        // Get listing data
+        const listing = <%- JSON.stringify(listing) %>;
+        const mapToken = '<%= mapToken %>';
+        console.log('Listing data for map:', listing);
+        console.log('Map token available:', !!mapToken);
+
+        // Check if geometry exists and has coordinates
+        let center;
+        if (listing && listing.geometry && listing.geometry.coordinates && listing.geometry.coordinates.length === 2) {
+            center = listing.geometry.coordinates;
+            console.log('Using coordinates:', center);
+        } else if (listing && listing.geometry && listing.geometry.longitude !== undefined && listing.geometry.latitude !== undefined) {
+            // Fallback for old format
+            center = [listing.geometry.longitude, listing.geometry.latitude];
+            console.log('Using legacy coordinates format:', center);
+        } else {
+            // Default coordinates if no geometry data is available
+            center = [0, 0];
+            console.warn('No valid geometry data found for this listing, using default coordinates');
+        }
+
+        // Make sure coordinates are valid numbers
+        if (isNaN(center[0]) || isNaN(center[1])) {
+            console.warn('Invalid coordinates, using default');
+            center = [0, 0];
+        }
+
+        console.log('Final coordinates for map:', center);
+
+        // Initialize the map using Leaflet
+        try {
+            // For Leaflet, we need to reverse the coordinates [lng, lat] to [lat, lng]
+            const leafletCoords = [center[1], center[0]];
+
+            // Create the map
+            const map = L.map('map').setView(leafletCoords, 9);
+
+            // Add the tile layer (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Add a marker
+            const marker = L.marker(leafletCoords).addTo(map);
+
+            // Add a popup
+            marker.bindPopup(`<h6>${listing.location}, ${listing.country}</h6><p>Exact location will be provided after booking</p>`)
+                .openPopup();
+
+            console.log('Leaflet map initialized successfully');
+
+        } catch (error) {
+            console.error('Error initializing map:', error);
+            // Show a simple error message with the coordinates
+            mapElement.innerHTML = `
+                <div class="alert alert-warning mb-3">Map could not be loaded</div>
+                <p class="mb-3">Location coordinates: ${center[1]}, ${center[0]}</p>
+                <p>Location: ${listing.location}, ${listing.country}</p>
+            `;
+        }
+    });
+</script>

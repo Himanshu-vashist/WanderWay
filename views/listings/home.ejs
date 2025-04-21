@@ -1,0 +1,357 @@
+<% layout("/layouts/boilerplate") %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderWay - Your Travel Community</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero-section {
+
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            padding-top: 4rem;
+        }
+
+        .hero-text {
+            flex: 1;
+            color: white;
+            z-index: 2;
+        }
+
+        .hero-text h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(to right, #ffffff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image img:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #ffffff;
+            color: #3b82f6;
+        }
+
+        .btn-primary:hover {
+            background: #e0e7ff;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Process Section */
+        .process-section {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: #6b7280;
+            font-size: 1.125rem;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            background: #3b82f6;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-icon img {
+            width: 30px;
+            height: 30px;
+            filter: brightness(0) invert(1);
+        }
+
+        .step-card h3 {
+            color: #1f2937;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-card p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        /* Video Section */
+        .video-section {
+            padding: 6rem 2rem;
+            background: #f3f4f6;
+        }
+
+        .video-container {
+            max-width: 1000px;
+            margin: 3rem auto 0;
+        }
+
+        .video-container video {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+
+            .btn-container {
+                justify-content: center;
+            }
+
+            .hero-image img {
+                transform: none;
+                margin-top: 2rem;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .btn {
+                padding: 0.75rem 1.5rem;
+            }
+        }
+
+        /* Decorative Elements */
+        .shape {
+            position: absolute;
+            z-index: 1;
+        }
+
+        .shape-1 {
+            top: 10%;
+            left: 5%;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            bottom: 20%;
+            right: 10%;
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 35px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="hero-content">
+            <div class="hero-text" data-aos="fade-right">
+                <h1>Discover Your Next Adventure</h1>
+                <p>Join our community of passionate travelers sharing their experiences and discovering hidden gems around the world.</p>
+                <div class="btn-container">
+                    <% if(!currUser) { %>
+                        <a href="/signup" class="btn btn-primary">Get Started</a>
+                        <a href="/login" class="btn btn-secondary">Sign In</a>
+                    <% } %>
+                    <% if(currUser) { %>
+                        <a href="/logout" class="btn btn-secondary">Logout</a>
+                    <% } %>
+                </div>
+            </div>
+            <div class="hero-image" data-aos="fade-left">
+                <img src="https://imgs.search.brave.com/ji8PnaDl8zBOOc5vabG_k2LcfpUgOQqrYEBgthwOInc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNTI1/NDA4OTg5L3Bob3Rv/L2ZhbWlseS13aXRo/LXN1aXRjYXNlcy1w/YXNzaW5nLWJ5LWZv/dW50YWluLWluLXRv/dXJpc3QtcmVzb3J0/LmpwZz9zPTYxMng2/MTImdz0wJms9MjAm/Yz16dEVkRHhWU3ZN/TUJ1dlVNWkJqMERC/V1RaSWRtYlRjUlR5/XzNhMWZ2dkJBPQ" alt="Travel Family" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="section-header" data-aos="fade-up">
+            <h2>How WanderWay Works</h2>
+            <p>Join our community and start sharing your travel experiences in just a few simple steps</p>
+        </div>
+        <div class="process-steps">
+            <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="step-icon">
+                    <img src="https://img.icons8.com/ios-filled/100/000000/login-rounded-right.png" alt="Login Icon">
+                </div>
+                <h3>Create Your Account</h3>
+                <p>Sign up in seconds and join our growing community of travel enthusiasts</p>
+            </div>
+            <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="step-icon">
+                    <img src="https://img.icons8.com/ios-filled/100/000000/add-property.png" alt="Add Listing Icon">
+                </div>
+                <h3>Share Your Experiences</h3>
+                <p>Add your favorite destinations and share your unique travel stories</p>
+            </div>
+            <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="step-icon">
+                    <img src="https://img.icons8.com/ios-filled/100/000000/rating.png" alt="Review Icon">
+                </div>
+                <h3>Connect & Engage</h3>
+                <p>Review locations, interact with other travelers, and discover new destinations</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section container mt-5 mb-5">
+        <div class="section-header text-center" data-aos="fade-up">
+            <h2 class="mb-3">See WanderWay in Action</h2>
+            <p class="text-muted mb-4">Discover amazing destinations and plan your next adventure</p>
+        </div>
+        <div class="video-container" data-aos="zoom-in">
+            <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm">
+                <iframe src="https://www.youtube.com/embed/hVvEISFw9w0?autoplay=0&mute=0" title="Travel video" allowfullscreen></iframe>
+            </div>
+            <div class="text-center mt-3">
+                <p class="small text-muted">Experience the world's most beautiful destinations with WanderWay</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+</body>
+</html>

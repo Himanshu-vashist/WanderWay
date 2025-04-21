@@ -1,0 +1,101 @@
+<% layout("/layouts/boilerplate.ejs") %>
+  <body>
+    <div class="row">
+      <div class="col-8 offset-2">
+      <br/><br/>
+    <h3 class="mb-4">Edit your Listing</h3>
+    <div class="card shadow-sm p-4 mb-5 bg-white rounded">
+    <form method="POST"
+      action="/listings/<%= listing._id %>?_method=PUT"
+      novalidate
+      class="needs-validation mb-3"
+      enctype="multipart/form-data">
+
+      <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+          <input name="listing[title]" value="<%= listing.title %>" type="text"  class="form-control" required/>
+          <div class="valid-feedback">Title looks good!</div>
+
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="listing[description]" class="form-control" required><%= listing.description %> </textarea>
+          <div class="invalid-feedback">Please enter a short description </div>
+      </div>
+
+
+
+      <div class="mb-3 medium-listing-card" style="width: 15rem;">
+        <div class="card-body">
+          <p class="card-text">Original Listing Image</p>
+      </div>
+        <div class="card">
+            <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing Image">
+
+        </div>
+    </div>
+
+
+    <div class="mb-3">
+      <label for="image" class="form-label">Upload New Image</label>
+      <input
+        id="image"
+        name="image"
+        type="file"
+        class="form-control"
+      />
+      <small class="form-text text-muted">Leave empty to keep the current image</small>
+    </div>
+    <div class="row">
+    <div class="mb-3 col-md-3">
+      <label for="price" class="form-label">Price</label>
+      <input name="listing[price]" value="<%= listing.price %>" type="number" class="form-control" required  />
+    </div>
+    <div class="mb-3 col-md-6">
+    <label for="country" class="form-label">Country</label>
+      <input
+        name="listing[country]"
+        value="<%= listing.country %>"
+        type="text" class="form-control" required
+      />
+    </div>
+  </div>
+    <div class="mb-3">
+      <label for="location" class="form-label">Location</label>
+      <input
+        name="listing[location]"
+        value="<%= listing.location %>"
+        type="text"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="category" class="form-label">Category</label>
+      <select name="listing[category]" class="form-select">
+        <option value="" <%= !listing.category ? 'selected' : '' %>>Select a category</option>
+        <option value="trending" <%= listing.category === 'trending' ? 'selected' : '' %>>Trending</option>
+        <option value="rooms" <%= listing.category === 'rooms' ? 'selected' : '' %>>Rooms</option>
+        <option value="iconic cities" <%= listing.category === 'iconic cities' ? 'selected' : '' %>>Iconic Cities</option>
+        <option value="castle" <%= listing.category === 'castle' ? 'selected' : '' %>>Castle</option>
+        <option value="mountain views" <%= listing.category === 'mountain views' ? 'selected' : '' %>>Mountain Views</option>
+        <option value="camping" <%= listing.category === 'camping' ? 'selected' : '' %>>Camping</option>
+        <option value="amazing nature" <%= listing.category === 'amazing nature' ? 'selected' : '' %>>Amazing Nature</option>
+        <option value="farms" <%= listing.category === 'farms' ? 'selected' : '' %>>Farms</option>
+        <option value="arctic" <%= listing.category === 'arctic' ? 'selected' : '' %>>Arctic</option>
+        <option value="boats" <%= listing.category === 'boats' ? 'selected' : '' %>>Boats</option>
+        <option value="domes" <%= listing.category === 'domes' ? 'selected' : '' %>>Domes</option>
+      </select>
+    </div>
+
+      <button class="btn btn-primary edit-btn mt-3">Save Changes</button>
+      <a href="/listings/<%= listing._id %>" class="btn btn-secondary mt-3 ms-2">Cancel</a>
+    </form>
+    </div>
+    </div>
+    </div>
+
+
+

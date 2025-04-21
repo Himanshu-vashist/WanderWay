@@ -1,0 +1,161 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<style>
+  .auth-container {
+    max-width: 500px;
+    margin: 2rem auto 4rem;
+  }
+
+  .auth-card {
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 2.5rem;
+  }
+
+  .auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .auth-header h1 {
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+  }
+
+  .auth-header p {
+    color: #6b7280;
+  }
+
+  .form-floating {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-floating label {
+    color: #6b7280;
+  }
+
+  .form-control:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
+  }
+
+  .auth-btn {
+    width: 100%;
+    padding: 0.75rem;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+
+  .auth-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #6b7280;
+  }
+
+  .auth-footer a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .auth-footer a:hover {
+    text-decoration: underline;
+  }
+
+  .auth-divider {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+    color: #9ca3af;
+  }
+
+  .auth-divider::before,
+  .auth-divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .auth-divider span {
+    padding: 0 1rem;
+  }
+
+  .social-login {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+    background-color: white;
+    color: #4b5563;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .social-btn:hover {
+    background-color: #f9fafb;
+    transform: translateY(-2px);
+  }
+
+  .social-btn i {
+    margin-right: 0.5rem;
+  }
+</style>
+
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h1>Welcome Back</h1>
+      <p>Sign in to continue your journey</p>
+    </div>
+
+    <form action="/login" method="POST" class="needs-validation" novalidate>
+      <div class="form-floating">
+        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+        <label for="username">Username</label>
+      </div>
+
+      <div class="form-floating">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="current-password" required>
+        <label for="password">Password</label>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="rememberMe">
+          <label class="form-check-label" for="rememberMe">Remember me</label>
+        </div>
+        <a href="#" class="small">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn btn-primary auth-btn">Sign In</button>
+    </form>
+
+    <div class="auth-divider">
+      <span>or continue with</span>
+    </div>
+
+    <div class="social-login">
+      <button type="button" class="social-btn">
+        <i class="fa-brands fa-google"></i> Google
+      </button>
+      <button type="button" class="social-btn">
+        <i class="fa-brands fa-facebook"></i> Facebook
+      </button>
+    </div>
+
+    <div class="auth-footer">
+      <p>Don't have an account? <a href="/signup">Sign up</a></p>
+    </div>
+  </div>
+</div>

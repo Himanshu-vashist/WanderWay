@@ -1,0 +1,108 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    color: #333;
+}
+
+/* Hero Section */
+.hero {
+    background: url('your-image.jpg') center center/cover no-repeat;
+    padding: 60px 20px;
+    color: white;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hero-content h1 {
+    font-size: 2.5em;
+    margin: 10px 0;
+}
+
+.search-form {
+    margin: 20px 0;
+}
+
+.search-form input, .search-form button {
+    padding: 10px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Section Styles */
+section {
+    padding: 60px 20px;
+    text-align: center;
+}
+
+/* Destination Grid */
+.destination-grid {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.destination {
+    background-color: #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    width: 200px;
+}
+
+/* Packages */
+.packages {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.package {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 10px;
+    width: 150px;
+}
+
+/* Footer */
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.footer-content h3 {
+    margin-bottom: 10px;
+}
+
+.footer-content ul {
+    list-style: none;
+}
+
+.footer-content ul li a {
+    color: #ddd;
+    text-decoration: none;
+}
+
+.footer-content form input, .footer-content form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
