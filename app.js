@@ -80,10 +80,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // Connect to MongoDB
 async function main() {
-  await mongoose.connect(MONGO_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-  });
+  await mongoose.connect(MONGO_URL);
 }
 main()
   .then(() => {
